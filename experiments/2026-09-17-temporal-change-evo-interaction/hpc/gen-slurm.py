@@ -52,15 +52,15 @@ fixed_parameters = {
     "TASK_IO_BANK_SIZE": "50000",
     "TASK_IO_UNIQUE_OUTPUT": "1",
     # -- Task environment + reproduction --
-    "TASK_ENV_CFG_PATH": "env-flat-rewards.json",
+    "TASK_ENV_CFG_PATH": "env-diff-rewards.json",
     "HORIZ_TRANS": "1",
     "SYM_VERT_TRANS_RES": "0",
     "OUSTING": "1",
     "VT_TASK_MATCH": "0",
-    "HOST_MIN_CYCLES_BEFORE_REPRO": "100",
-    "SYM_MIN_CYCLES_BEFORE_REPRO": "10",
-    "HOST_REPRO_RES": "1",
-    "SYM_HORIZ_TRANS_RES": "1",
+    "HOST_MIN_CYCLES_BEFORE_REPRO": "0",
+    "SYM_MIN_CYCLES_BEFORE_REPRO": "0",
+    "HOST_REPRO_RES": "256",
+    "SYM_HORIZ_TRANS_RES": "128",
     # -- Host-endosymbiont interactions --
     "ENABLE_STRESS": "0",
     "ENABLE_NUTRIENT": "0",
@@ -69,7 +69,7 @@ fixed_parameters = {
     "HEALTH_INTERACTION_CHANCE": "1.0",
     "TASK_PROFILE_COMPATIBILITY_MODE": "task-any-match",
     "HORIZONTAL_TRANSMISSION_COMPATIBILITY_MODE": "task-profile-strictly-stronger-match",
-    # -- Interaction values --
+    # -- Evolvable interaction value --
     "HOST_INT": "-2",
     "SYM_INT": "-2",
     "MUTATION_SIZE": "0.02",
@@ -84,13 +84,18 @@ combos.register_var("cycle_prop__COPY_OVER")
 combos.register_var("interaction_multiplier__COPY_OVER")
 combos.register_var("task_credit__COPY_OVER")
 combos.register_var("EVENTS_CFG_PATH")
+combos.register_var("VERTICAL_TRANSMISSION")
 
 combos.add_val(
     "symbiont__COPY_OVER",
     [
-        "-START_MOI 0 -HEALTH_TYPE parasite -VERTICAL_TRANSMISSION 0",
-        "-START_MOI 1 -HEALTH_TYPE parasite -VERTICAL_TRANSMISSION 0"
+        "-START_MOI 1 -HEALTH_TYPE interaction-value"
     ]
+)
+
+combos.add_val(
+    "VERTICAL_TRANSMISSION",
+    ["0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"]
 )
 
 combos.add_val(

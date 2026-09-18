@@ -52,15 +52,15 @@ fixed_parameters = {
     "TASK_IO_BANK_SIZE": "50000",
     "TASK_IO_UNIQUE_OUTPUT": "1",
     # -- Task environment + reproduction --
-    "TASK_ENV_CFG_PATH": "env-flat-rewards.json",
+    "TASK_ENV_CFG_PATH": "env-diff-rewards.json",
     "HORIZ_TRANS": "1",
     "SYM_VERT_TRANS_RES": "0",
     "OUSTING": "1",
     "VT_TASK_MATCH": "0",
-    "HOST_MIN_CYCLES_BEFORE_REPRO": "100",
-    "SYM_MIN_CYCLES_BEFORE_REPRO": "10",
-    "HOST_REPRO_RES": "1",
-    "SYM_HORIZ_TRANS_RES": "1",
+    "HOST_MIN_CYCLES_BEFORE_REPRO": "0",
+    "SYM_MIN_CYCLES_BEFORE_REPRO": "0",
+    "HOST_REPRO_RES": "256",
+    "SYM_HORIZ_TRANS_RES": "128",
     # -- Host-endosymbiont interactions --
     "ENABLE_STRESS": "0",
     "ENABLE_NUTRIENT": "0",
@@ -69,7 +69,7 @@ fixed_parameters = {
     "HEALTH_INTERACTION_CHANCE": "1.0",
     "TASK_PROFILE_COMPATIBILITY_MODE": "task-any-match",
     "HORIZONTAL_TRANSMISSION_COMPATIBILITY_MODE": "task-profile-strictly-stronger-match",
-    # -- Interaction values --
+    # -- Evolvable interaction value --
     "HOST_INT": "-2",
     "SYM_INT": "-2",
     "MUTATION_SIZE": "0.02",
@@ -77,19 +77,21 @@ fixed_parameters = {
 }
 
 special_decorators = [
-    "__COPY_OVER"
+    "__COPY_OVER",
+    "__DYNAMIC"
 ]
 combos.register_var("symbiont__COPY_OVER")
 combos.register_var("cycle_prop__COPY_OVER")
 combos.register_var("interaction_multiplier__COPY_OVER")
 combos.register_var("task_credit__COPY_OVER")
 combos.register_var("EVENTS_CFG_PATH")
+combos.register_var("spatial_structure__DYNAMIC")
 
 combos.add_val(
     "symbiont__COPY_OVER",
     [
-        "-START_MOI 0 -HEALTH_TYPE parasite -VERTICAL_TRANSMISSION 0",
-        "-START_MOI 1 -HEALTH_TYPE parasite -VERTICAL_TRANSMISSION 0"
+        "-START_MOI 0 -HEALTH_TYPE mutualist -VERTICAL_TRANSMISSION 1",
+        "-START_MOI 1 -HEALTH_TYPE mutualist -VERTICAL_TRANSMISSION 1"
     ]
 )
 
@@ -115,11 +117,21 @@ combos.add_val(
 combos.add_val(
     "EVENTS_CFG_PATH",
     [
-        "events-constant.json",
-        "events-fluctuating-25.json",
-        "events-fluctuating-50.json",
-        "events-fluctuating-100.json",
-        "events-fluctuating-200.json"
+        "events-constant.json"
+    ]
+)
+
+combos.add_val(
+    "spatial_structure__DYNAMIC",
+    [
+        "toroidal-lattice_100x100",
+        "toroidal-lattice_50x200",
+        "toroidal-lattice_20x500",
+        "toroidal-lattice_10x1000",
+        "toroidal-lattice_4x2500",
+        "toroidal-lattice_2x5000",
+        "cycle",
+        "well-mixed"
     ]
 )
 
@@ -138,6 +150,7 @@ def main():
     parser.add_argument("--runs_per_subdir", type=int, default=-1, help="How many replicates to clump into job subdirectories")
     parser.add_argument("--repo_dir", type=str, help="Where is the repository for this experiment?")
     parser.add_argument("--hpc_env_file", type=str, default=None, help="Bash script that loads correct hpc modules")
+    parser.add_argument("--spatial_structs_dir", type=str, help="Which directory contains spatial structures to be used?")
 
 
     args = parser.parse_args()
@@ -160,6 +173,7 @@ def main():
     print(f' - Data directory: {args.data_dir}')
     print(f' - Config directory: {args.config_dir}')
     print(f' - Repository directory: {args.repo_dir}')
+    print(f' - Spatial structs directory: {args.spatial_structs_dir}')
     print(f' - Job directory: {args.job_dir}')
     print(f' - Replicates: {args.replicates}')
     print(f' - Account: {args.hpc_account}')
@@ -182,6 +196,35 @@ def main():
     data_dir = args.data_dir
     job_dir = args.job_dir
     repo_dir = args.repo_dir
+    spatial_structs_dir = args.spatial_structs_dir
+
+
+    # Identify relevant/available spatial structure files
+    spatial_structs = combos.get_vals("spatial_structure__DYNAMIC")
+    # Only allow .mat files.
+    # IMPORTANT: If multiple graph files for a single condition, they must:
+    #  - each end with _ID.mat where ID is a value [0:number of replicates)
+    #  - all be in matrix format
+    # No spatial structure files for well-mixed condition.
+    struct_files = {
+        spatial_struct: [
+            filename
+            for filename in os.listdir(spatial_structs_dir)
+            if filename.startswith(spatial_struct) and (".mat" in filename)
+        ]
+        for spatial_struct in spatial_structs if spatial_struct != "well-mixed"
+    }
+
+    # Sort any lists of file names on _<number>
+    for spatial_struct in struct_files:
+        if len(struct_files[spatial_struct]) > 1:
+            struct_files[spatial_struct].sort(key = lambda x : int(x.split(".")[0].split("_")[-1]))
+            # If more files than replicates, use only first N files
+            if args.replicates < len(struct_files[spatial_struct]):
+                struct_files[spatial_struct] = struct_files[spatial_struct][:args.replicates]
+            elif args.replicates > len(struct_files[spatial_struct]):
+                print(f"Too few spatial structure files for requested number of replicates for {spatial_struct}")
+                exit(-1)
 
     # -- Generate slurm script for each condition --
     for condition_info in combo_list:
@@ -198,6 +241,7 @@ def main():
         file_str = file_str.replace("<<REPO_DIR>>", repo_dir)
         file_str = file_str.replace("<<EXEC>>", executable)
         file_str = file_str.replace("<<JOB_SEED_OFFSET>>", str(cur_seed))
+        file_str = file_str.replace("<<SPATIAL_STRUCT_DIR>>", spatial_structs_dir)
         if args.hpc_account is None:
             file_str = file_str.replace("<<HPC_ACCOUNT_INFO>>", "")
         else:
@@ -222,6 +266,40 @@ def main():
                 continue
             cmd_line_params[param] = condition_info[param]
 
+        # Spatial structure configuration
+        cond_spatial_struct = condition_info["spatial_structure__DYNAMIC"]
+        need_to_load_struct_file = False
+        if cond_spatial_struct == "well-mixed":
+            # Configure spatial structure as well-mixed using symbulation parameters
+            cmd_line_params["SPATIAL_STRUCT_MODE"] = "well-mixed"
+            cmd_line_params["SPATIAL_STRUCT_LOAD_MODE"] = "matrix"
+            cmd_line_params["SPATIAL_STRUCT_CFG_PATH"] = "none"
+        else:
+            need_to_load_struct_file = True
+            # Load spatial structure file
+            cmd_line_params["SPATIAL_STRUCT_MODE"] = "load"
+            cmd_line_params["SPATIAL_STRUCT_LOAD_MODE"] = "matrix"
+            # Identify which spatial structure file to load
+            cond_struct_files = struct_files[cond_spatial_struct]
+            if len(cond_struct_files) <= 1:
+                # Just one graph file for entire condition, use that.
+                cmd_line_params["SPATIAL_STRUCT_CFG_PATH"] = f"{cond_spatial_struct}.mat"
+            else:
+                # Multiple one graph file per replicate.
+                graph_name_prefix = "_".join(cond_struct_files[-1].split("_")[:-1])
+                # Check that all replicates will have a graph file as expected
+                for i in range(len(cond_struct_files)):
+                    run_id = i
+                    run_seed = cur_seed + i
+                    graph_filename = cond_struct_files[i]
+                    expected_graph_name = f"{graph_name_prefix}_{run_id}"
+                    if graph_filename != expected_graph_name:
+                        print(f"Unexpected graph name for condition: {condition_info}")
+                        print(f"  Expected: {expected_graph_name}")
+                        print(f"  Found: {graph_filename}")
+                # Set graph file name
+                cmd_line_params["SPATIAL_STRUCT_CFG_PATH"] = f"{cond_spatial_struct}_" + "${RUN_ID}.mat"
+
         # Build command line parameter string (including any 'copy_over' parameters)
         params = list(cmd_line_params.keys())
         params.sort()
@@ -241,6 +319,9 @@ def main():
         config_cp_cmds = []
         config_cp_cmds.append("cp ${CONFIG_DIR}/*.cfg .")
         config_cp_cmds.append("cp ${CONFIG_DIR}/*.json .")
+        # Only copy a spatial structure file into run directory if needed
+        if need_to_load_struct_file:
+            config_cp_cmds.append("cp ${GRAPHS_DIR}/" + cmd_line_params["SPATIAL_STRUCT_CFG_PATH"] + " .")
         config_cp_cmds_str = "\n".join(config_cp_cmds)
         file_str = file_str.replace("<<CONFIG_CP_CMDS>>", config_cp_cmds_str)
 
