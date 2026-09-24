@@ -1,0 +1,88 @@
+{
+  "events": [
+    {
+      "event_type": "task_value",
+      "task_name": [
+        "NAND", "OR_NOT", "AND_NOT", "XOR"
+      ],
+      "action": "change",
+      "value": -1,
+      "timing": "200:-1:200",
+      "group": "shared"
+    },
+    {
+      "event_type": "task_value",
+      "task_name": [
+        "NOT", "AND", "OR", "NOR"
+      ],
+      "action": "mult",
+      "value": -1,
+      "timing": "0:-1:200",
+      "group": "shared"
+    },
+    {
+      "event_type": "task_value",
+      "task_name": "NAND",
+      "action": "change",
+      "value": 1,
+      "timing": "0:-1:200",
+      "group": "shared"
+    },
+    {
+      "event_type": "task_value",
+      "task_name": "OR_NOT",
+      "action": "change",
+      "value": 2,
+      "timing": "0:-1:200",
+      "group": "shared"
+    },
+    {
+      "event_type": "task_value",
+      "task_name": "AND_NOT",
+      "action": "change",
+      "value": 4,
+      "timing": "0:-1:200",
+      "group": "shared"
+    },
+    {
+      "event_type": "task_value",
+      "task_name": "XOR",
+      "action": "change",
+      "value": 8,
+      "timing": "0:-1:200",
+      "group": "shared"
+    },
+    {
+      "event_type": "task_value",
+      "task_name": "NOT",
+      "action": "change",
+      "value": 1,
+      "timing": "200:-1:200",
+      "group": "shared"
+    },
+    {
+      "event_type": "task_value",
+      "task_name": "AND",
+      "action": "change",
+      "value": 2,
+      "timing": "200:-1:200",
+      "group": "shared"
+    },
+    {
+      "event_type": "task_value",
+      "task_name": "OR",
+      "action": "change",
+      "value": 4,
+      "timing": "200:-1:200",
+      "group": "shared"
+    },
+    {
+      "event_type": "task_value",
+      "task_name": "NOR",
+      "action": "change",
+      "value": 8,
+      "timing": "200:-1:200",
+      "group": "shared"
+    }
+  ]
+}
