@@ -1,12 +1,22 @@
 #!/usr/bin/env bash
 
-source job-info.sh
+# source job-info.sh
+REPLICATES=10
+EXP_SLUG=2026-09-22-nosym-flat-poisontask
+SEED_OFFSET=10000
+JOB_TIME=16:00:00
+JOB_MEM=8G
+PROJECT_NAME=2026-gvsu-symbiosis-env-change
+RUNS_PER_SUBDIR=1000
+USERNAME=kelleyde
+# ACCOUNT=devolab
+HPC_ENV_FILE=clipper-hpc-env.sh
 
-REPO_DIR=/mnt/home/${USERNAME}/devo_ws/${PROJECT_NAME} # <-- CHANGE THIS to where ever you have this repository stored on your account
+REPO_DIR=/mnt/home/${USERNAME}/research/${PROJECT_NAME} # <-- CHANGE THIS to where ever you have this repository stored on your account
 REPO_SCRIPTS_DIR=${REPO_DIR}/scripts
 HOME_EXP_DIR=${REPO_DIR}/experiments/${EXP_SLUG}
 
-DATA_DIR=/mnt/scratch/${USERNAME}/data/${PROJECT_NAME}/${EXP_SLUG}
+DATA_DIR=/mnt/projects/lalejina_project/symbiosis-env-change/${USERNAME}/data/${EXP_SLUG}
 # DATA_DIR=/mnt/scratch/${USERNAME}_scratch/${PROJECT_NAME}/${EXP_SLUG}
 JOB_DIR=${DATA_DIR}/jobs
 CONFIG_DIR=${HOME_EXP_DIR}/hpc/config
