@@ -30,7 +30,7 @@ executable = "symbulation_sgp"
 project_name = "2026-gvsu-symbiosis-env-change"
 experiment_name = "experiments/2026-09-22-nosym-flat-poisontask"
 
-base_slurm_script_fpath = f"~/research/{experiement_name}/experiments/{experiment_name}/hpc/base_slurm_script.txt"
+base_slurm_script_fpath = f"~/research/{project_name}/experiments/{experiment_name}/hpc/base_slurm_script.txt"
 
 # Create combos
 combos = CombinationCollector()
