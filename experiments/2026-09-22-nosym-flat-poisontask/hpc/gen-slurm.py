@@ -26,7 +26,11 @@ default_job_mem_request = "4G"
 
 executable = "symbulation_sgp"
 
-base_slurm_script_fpath = "./base_slurm_script.txt"
+# Path to base_slurm_script.txt
+project_name = "2026-gvsu-symbiosis-env-change"
+experiment_name = "experiments/2026-09-22-nosym-flat-poisontask"
+
+base_slurm_script_fpath = f"~/research/{experiement_name}/experiments/{experiment_name}/hpc/base_slurm_script.txt"
 
 # Create combos
 combos = CombinationCollector()
