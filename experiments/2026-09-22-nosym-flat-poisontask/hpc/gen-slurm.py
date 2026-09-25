@@ -28,7 +28,7 @@ executable = "symbulation_sgp"
 
 # Path to base_slurm_script.txt
 project_name = "2026-gvsu-symbiosis-env-change"
-experiment_name = "experiments/2026-09-22-nosym-flat-poisontask"
+experiment_name = "2026-09-22-nosym-flat-poisontask"
 
 base_slurm_script_fpath = f"~/research/{project_name}/experiments/{experiment_name}/hpc/base_slurm_script.txt"
 
