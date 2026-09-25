@@ -28,7 +28,7 @@ source ${REPO_DIR}/pyenv/bin/activate
 
 # (2) Generate slurm script
 #   - This will generate an events file for each run
-python3 gen-slurm.py \
+python3 experiments/${EXP_SLUG}/hpc/gen-slurm.py \
   --runs_per_subdir ${RUNS_PER_SUBDIR} \
   --time_request ${JOB_TIME} \
   --mem ${JOB_MEM} \
