@@ -19,14 +19,14 @@ import utilities as utils
 
 # Default configuration values
 default_seed_offset = 1000
-default_account = None
+default_account = "kelleyde"
 default_num_replicates = 10
 default_job_time_request = "8:00:00"
 default_job_mem_request = "4G"
 
 executable = "symbulation_sgp"
 
-base_slurm_script_fpath = "./home/kelleyde/research/2026-gvsu-symbiosis-env-change/experiments/2026-09-22-nosym-flat-poisontask/hpc/base_slurm_script.txt"
+base_slurm_script_fpath = "./base_slurm_script.txt"
 
 # Create combos
 combos = CombinationCollector()
