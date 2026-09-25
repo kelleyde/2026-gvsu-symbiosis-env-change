@@ -9,7 +9,7 @@ JOB_MEM=8G
 PROJECT_NAME=2026-gvsu-symbiosis-env-change
 RUNS_PER_SUBDIR=1000
 USERNAME=kelleyde
-# ACCOUNT=devolab
+ACCOUNT=kelleyde
 HPC_ENV_FILE=clipper-hpc-env.sh
 
 REPO_DIR=/mnt/home/${USERNAME}/research/${PROJECT_NAME} # <-- CHANGE THIS to where ever you have this repository stored on your account
@@ -28,7 +28,7 @@ source ${REPO_DIR}/pyenv/bin/activate
 
 # (2) Generate slurm script
 #   - This will generate an events file for each run
-python experiments/${EXP_SLUG}/hpc/gen-slurm.py \
+python3 experiments/${EXP_SLUG}/hpc/gen-slurm.py \
   --runs_per_subdir ${RUNS_PER_SUBDIR} \
   --time_request ${JOB_TIME} \
   --mem ${JOB_MEM} \
