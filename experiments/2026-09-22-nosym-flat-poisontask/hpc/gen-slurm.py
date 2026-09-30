@@ -19,7 +19,7 @@ import utilities as utils
 
 # Default configuration values
 default_seed_offset = 1000
-default_account = "kelleyde"
+# default_account = "kelleyde"
 default_num_replicates = 10
 default_job_time_request = "8:00:00"
 default_job_mem_request = "4G"
@@ -177,7 +177,6 @@ def main():
     print(f' - Repository directory: {args.repo_dir}')
     print(f' - Job directory: {args.job_dir}')
     print(f' - Replicates: {args.replicates}')
-    print(f' - Account: {args.hpc_account}')
     print(f' - Time Request: {args.time_request}')
     print(f' - Memory: {args.mem}')
     print(f' - Seed offset: {args.seed_offset}')
@@ -213,10 +212,10 @@ def main():
         file_str = file_str.replace("<<REPO_DIR>>", repo_dir)
         file_str = file_str.replace("<<EXEC>>", executable)
         file_str = file_str.replace("<<JOB_SEED_OFFSET>>", str(cur_seed))
-        if args.hpc_account is None:
-            file_str = file_str.replace("<<HPC_ACCOUNT_INFO>>", "")
-        else:
-            file_str = file_str.replace("<<HPC_ACCOUNT_INFO>>", f"#SBATCH --account {args.hpc_account}")
+        # if args.hpc_account is None:
+        #     file_str = file_str.replace("<<HPC_ACCOUNT_INFO>>", "")
+        # else:
+        #     file_str = file_str.replace("<<HPC_ACCOUNT_INFO>>", f"#SBATCH --account {args.hpc_account}")
 
         if args.hpc_env_file is None:
             file_str = file_str.replace("<<SETUP_HPC_ENV>>", "")
