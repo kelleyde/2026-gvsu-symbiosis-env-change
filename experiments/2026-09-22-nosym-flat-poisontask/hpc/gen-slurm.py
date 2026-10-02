@@ -19,7 +19,7 @@ import utilities as utils
 
 # Default configuration values
 default_seed_offset = 1000
-# default_account = "kelleyde"
+default_account = None
 default_num_replicates = 10
 default_job_time_request = "8:00:00"
 default_job_mem_request = "4G"
@@ -153,6 +153,7 @@ def main():
     parser.add_argument("--runs_per_subdir", type=int, default=-1, help="How many replicates to clump into job subdirectories")
     parser.add_argument("--repo_dir", type=str, help="Where is the repository for this experiment?")
     parser.add_argument("--hpc_env_file", type=str, default=None, help="Bash script that loads correct hpc modules")
+    parser.add_argument("--hpc_account", type=str, default=default_account, help="Value to use for the slurm ACCOUNT")
 
 
     args = parser.parse_args()
@@ -212,10 +213,10 @@ def main():
         file_str = file_str.replace("<<REPO_DIR>>", repo_dir)
         file_str = file_str.replace("<<EXEC>>", executable)
         file_str = file_str.replace("<<JOB_SEED_OFFSET>>", str(cur_seed))
-        # if args.hpc_account is None:
-        #     file_str = file_str.replace("<<HPC_ACCOUNT_INFO>>", "")
-        # else:
-        #     file_str = file_str.replace("<<HPC_ACCOUNT_INFO>>", f"#SBATCH --account {args.hpc_account}")
+        if args.hpc_account is None:
+            file_str = file_str.replace("<<HPC_ACCOUNT_INFO>>", "")
+        else:
+            file_str = file_str.replace("<<HPC_ACCOUNT_INFO>>", f"#SBATCH --account {args.hpc_account}")
 
         if args.hpc_env_file is None:
             file_str = file_str.replace("<<SETUP_HPC_ENV>>", "")
