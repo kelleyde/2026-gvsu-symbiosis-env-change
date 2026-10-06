@@ -131,7 +131,7 @@ combos.add_val(
 )
 
 combos.add_val(
-    "resource_repro_req",
+    "resource_repro_req__COPY_OVER",
     [
         "-HOST_REPRO_RES 128",
         "-HOST_REPRO_RES 64",
