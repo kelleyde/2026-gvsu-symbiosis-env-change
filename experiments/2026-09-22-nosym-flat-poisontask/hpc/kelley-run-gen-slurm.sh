@@ -39,4 +39,4 @@ python3 gen-slurm.py \
   --job_dir ${JOB_DIR} \
   --seed_offset ${SEED_OFFSET} \
   --hpc_env_file ${HPC_ENV_FILEPATH}\
-  --account ${ACCOUNT} 
+  --hpc_account ${ACCOUNT} 
