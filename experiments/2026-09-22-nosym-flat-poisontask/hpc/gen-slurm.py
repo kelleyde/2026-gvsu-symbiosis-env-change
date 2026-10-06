@@ -91,6 +91,8 @@ combos.register_var("interaction_multiplier__COPY_OVER")
 combos.register_var("task_credit__COPY_OVER")
 combos.register_var("EVENTS_CFG_PATH")
 # combos.register_var("resource_repro_req__COPY_OVER")
+combos.register_var("-HOST_REPRO_RES")
+
 
 combos.add_val(
     "symbiont__COPY_OVER",
