@@ -157,6 +157,7 @@ def main():
     parser.add_argument("--repo_dir", type=str, help="Where is the repository for this experiment?")
     parser.add_argument("--hpc_env_file", type=str, default=None, help="Bash script that loads correct hpc modules")
     parser.add_argument("--hpc_account", type=str, default=default_account, help="Value to use for the slurm ACCOUNT")
+    parser.add_argument("--partition", type=str, default="cpu", help="patition used cpu")
 
 
     args = parser.parse_args()
@@ -208,6 +209,7 @@ def main():
         cur_seed = args.seed_offset + (cur_job_id * args.replicates)
         filename_prefix = f'RUN_C{cond_i}'
         file_str = base_slurm_script
+        file_str = file_str.replace("<<PARTITION>>", f"cpu")
         file_str = file_str.replace("<<TIME_REQUEST>>", args.time_request)
         file_str = file_str.replace("<<ARRAY_ID_RANGE>>", f"1-{args.replicates}")
         file_str = file_str.replace("<<MEMORY_REQUEST>>", args.mem)
