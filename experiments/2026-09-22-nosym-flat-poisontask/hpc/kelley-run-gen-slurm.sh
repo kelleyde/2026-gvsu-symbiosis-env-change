@@ -9,7 +9,7 @@ JOB_MEM=8G
 PROJECT_NAME=2026-gvsu-symbiosis-env-change
 RUNS_PER_SUBDIR=1000
 USERNAME=kelleyde
-ACCOUNT=kelleyde
+ACCOUNT=lalejina
 HPC_ENV_FILE=delaney-hpc-env.sh
 
 REPO_DIR=/mnt/home/${USERNAME}/research/${PROJECT_NAME} # <-- CHANGE THIS to where ever you have this repository stored on your account
@@ -38,4 +38,5 @@ python3 gen-slurm.py \
   --replicates ${REPLICATES} \
   --job_dir ${JOB_DIR} \
   --seed_offset ${SEED_OFFSET} \
-  --hpc_env_file ${HPC_ENV_FILEPATH}
+  --hpc_env_file ${HPC_ENV_FILEPATH}\
+  --account ${ACCOUNT} 
