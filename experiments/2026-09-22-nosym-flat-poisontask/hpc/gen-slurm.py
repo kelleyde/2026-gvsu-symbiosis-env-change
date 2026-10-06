@@ -90,7 +90,7 @@ combos.register_var("cycle_prop__COPY_OVER")
 combos.register_var("interaction_multiplier__COPY_OVER")
 combos.register_var("task_credit__COPY_OVER")
 combos.register_var("EVENTS_CFG_PATH")
-combos.register_var("resource_repro_req__COPY_OVER")
+# combos.register_var("resource_repro_req__COPY_OVER")
 
 combos.add_val(
     "symbiont__COPY_OVER",
@@ -119,6 +119,17 @@ combos.add_val(
 )
 
 combos.add_val(
+    "resource_repro_req__COPY_OVER",
+    [
+        "-HOST_REPRO_RES 128",
+        "-HOST_REPRO_RES 64",
+        "-HOST_REPRO_RES 32",
+        "-HOST_REPRO_RES 16",
+        "-HOST_REPRO_RES 1"
+    ]
+)
+
+combos.add_val(
     "EVENTS_CFG_PATH",
     [
         "events-constant.json",
@@ -130,16 +141,6 @@ combos.add_val(
     ]
 )
 
-combos.add_val(
-    "resource_repro_req__COPY_OVER",
-    [
-        "-HOST_REPRO_RES 128",
-        "-HOST_REPRO_RES 64",
-        "-HOST_REPRO_RES 32",
-        "-HOST_REPRO_RES 16",
-        "-HOST_REPRO_RES 1",
-    ]
-)
 
 
 def main():
