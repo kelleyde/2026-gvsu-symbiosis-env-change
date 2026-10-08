@@ -65,7 +65,7 @@ fixed_parameters = {
     "VT_TASK_MATCH": "0",
     "HOST_MIN_CYCLES_BEFORE_REPRO": "0",
     "SYM_MIN_CYCLES_BEFORE_REPRO": "0",
-    "HOST_REPRO_RES": "256",
+    # "HOST_REPRO_RES": "256",
     "SYM_HORIZ_TRANS_RES": "128",
     # -- Host-endosymbiont interactions --
     "ENABLE_STRESS": "0",
@@ -91,7 +91,7 @@ combos.register_var("interaction_multiplier__COPY_OVER")
 combos.register_var("task_credit__COPY_OVER")
 combos.register_var("EVENTS_CFG_PATH")
 # combos.register_var("resource_repro_req__COPY_OVER")
-combos.register_var("-HOST_REPRO_RES")
+combos.register_var("HOST_REPRO_RES")
 
 
 combos.add_val(
@@ -121,7 +121,7 @@ combos.add_val(
 )
 
 combos.add_val(
-    "-HOST_REPRO_RES",
+    "HOST_REPRO_RES",
     [
         "128",
         "64",
