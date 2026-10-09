@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DATA_DIR=/mnt/scratch/lalejini/data/2026-gvsu-symbiosis-env-change/2026-09-17-temporal-change-mutualists/
+DATA_DIR=/mnt/projects/lalejina_project/symbiosis-env-change/kelleyde/data/2026-09-22-nosym-flat-poisontask/flat-poison-9-22
 DUMP_DIR=./dump
 FINAL_UPDATE=200000
 TS_UNITS=interval
