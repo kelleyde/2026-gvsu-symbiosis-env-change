@@ -81,7 +81,8 @@ run_cfg_fields_time_series = {
     "SEED",
     "START_MOI",
     "HEALTH_TYPE",
-    "EVENTS_CFG_PATH"
+    "EVENTS_CFG_PATH",
+    "HOST_REPRO_RES"
 }
 
 org_counts_fields_time_series = {
