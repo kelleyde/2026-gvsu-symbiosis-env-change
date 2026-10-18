@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+# source job-info.sh
+
+REPLICATES=10
+EXP_SLUG=2026-09-22-nosym-flat-poisontask
+SEED_OFFSET=20000
+JOB_TIME=16:00:00
+JOB_MEM=8G
+PROJECT_NAME=2026-gvsu-symbiosis-env-change
+RUNS_PER_SUBDIR=1000
+USERNAME=kelleyde
+ACCOUNT=devolab
+HPC_ENV_FILE=clipper-hpc-env.sh
+
+REPO_DIR=/home/kelleyde/research/${PROJECT_NAME}
+HOME_EXP_DIR=${REPO_DIR}/experiments/${EXP_SLUG}
+
+DATA_DIR=${HOME_EXP_DIR}/hpc/test/data
+JOB_DIR=${HOME_EXP_DIR}/hpc/test/jobs
+CONFIG_DIR=${HOME_EXP_DIR}/hpc/config
+HPC_ENV_FILEPATH=${REPO_DIR}/hpc-env/${HPC_ENV_FILE}
+
+# (1) Activate appropriate Python virtual environment
+# source ${REPO_DIR}/pyenv/bin/activate
+
+# (2) Generate slurm script
+#   - This will generate an events file for each run
+python3 ${HOME_EXP_DIR}/hpc/gen-slurm.py \
+  --runs_per_subdir ${RUNS_PER_SUBDIR} \
+  --time_request ${JOB_TIME} \
+  --mem ${JOB_MEM} \
+  --data_dir ${DATA_DIR} \
+  --config_dir ${CONFIG_DIR} \
+  --repo_dir ${REPO_DIR} \
+  --replicates ${REPLICATES} \
+  --job_dir ${JOB_DIR} \
+  --seed_offset ${SEED_OFFSET} \
+  --hpc_account ${ACCOUNT} \
+  --hpc_env_file ${HPC_ENV_FILEPATH}
