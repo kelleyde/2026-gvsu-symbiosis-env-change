@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+# source job-info.sh
+REPLICATES=10
+EXP_SLUG=2026-10-18-para-flat-task-reward
+SEED_OFFSET=10000
+JOB_TIME=16:00:00
+JOB_MEM=8G
+PROJECT_NAME=2026-gvsu-symbiosis-env-change
+RUNS_PER_SUBDIR=1000
+USERNAME=kelleyde
+ACCOUNT=lalejina
+HPC_ENV_FILE=delaney-hpc-env.sh
+
+REPO_DIR=/mnt/home/${USERNAME}/research/${PROJECT_NAME} # <-- CHANGE THIS to where ever you have this repository stored on your account
+REPO_SCRIPTS_DIR=${REPO_DIR}/scripts
+HOME_EXP_DIR=${REPO_DIR}/experiments/${EXP_SLUG}
+
+DATA_DIR=/mnt/projects/lalejina_project/symbiosis-env-change/${USERNAME}/data/${EXP_SLUG}
+# DATA_DIR=/mnt/scratch/${USERNAME}_scratch/${PROJECT_NAME}/${EXP_SLUG}
+JOB_DIR=${DATA_DIR}/jobs
+CONFIG_DIR=${HOME_EXP_DIR}/hpc/config
+HPC_ENV_FILEPATH=${REPO_DIR}/hpc-env/${HPC_ENV_FILE}
+
+# (1) Activate appropriate Python virtual environment
+source ${HPC_ENV_FILEPATH}
+source ${REPO_DIR}/pyenv/bin/activate
+
+# (2) Generate slurm script
+#   - This will generate an events file for each run
+python3 gen-slurm.py \
+  --runs_per_subdir ${RUNS_PER_SUBDIR} \
+  --time_request ${JOB_TIME} \
+  --mem ${JOB_MEM} \
+  --data_dir ${DATA_DIR} \
+  --config_dir ${CONFIG_DIR} \
+  --repo_dir ${REPO_DIR} \
+  --replicates ${REPLICATES} \
+  --job_dir ${JOB_DIR} \
+  --seed_offset ${SEED_OFFSET} \
+  --hpc_env_file ${HPC_ENV_FILEPATH}\
+  --hpc_account ${ACCOUNT} 
