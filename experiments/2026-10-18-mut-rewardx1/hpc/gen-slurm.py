@@ -109,7 +109,7 @@ combos.add_val(
 combos.add_val(
     "interaction_multiplier__COPY_OVER",
     [
-        "-MUTUALIST_CYCLE_DONATE_MULTIPLIER 4 -PARASITE_CYCLE_STEAL_MULTIPLIER 4",
+        "-MUTUALIST_CYCLE_DONATE_MULTIPLIER 4 -PARASITE_CYCLE_STEAL_MULTIPLIER 4"
     ]
 )
 
@@ -126,7 +126,7 @@ combos.add_val(
         "-HOST_REPRO_RES 64 -SYM_HORIZ_TRANS_RES 32",
         "-HOST_REPRO_RES 32 -SYM_HORIZ_TRANS_RES 16",
         "-HOST_REPRO_RES 16 -SYM_HORIZ_TRANS_RES 8"
-     ]
+    ]
 )
 
 combos.add_val(
