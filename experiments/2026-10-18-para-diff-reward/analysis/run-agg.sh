@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-DATA_DIR=/mnt/projects/lalejina_project/symbiosis-env-change/kelleyde/data/2026-09-22-nosym-flat-poisontask/
-DUMP_DIR=/mnt/projects/lalejina_project/symbiosis-env-change/kelleyde/data/2026-09-22-nosym-flat-poisontask/dump
+DATA_DIR=/mnt/projects/lalejina_project/symbiosis-env-change/kelleyde/data/2026-10-18-para-diff-reward/
+DUMP_DIR=/mnt/projects/lalejina_project/symbiosis-env-change/kelleyde/data/2026-10-18-para-diff-reward/dump
 FINAL_UPDATE=100000
 TS_UNITS=interval
 TS_RES=1
