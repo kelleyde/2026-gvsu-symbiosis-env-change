@@ -15,7 +15,7 @@
       "task_name": [
         "NOT", "AND", "OR", "NOR"
       ],
-      "action": "mult",
+      "action": "change",
       "value": -1,
       "timing": "0:-1:200",
       "group": "shared"
