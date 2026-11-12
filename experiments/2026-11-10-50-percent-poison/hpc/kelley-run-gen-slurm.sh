@@ -2,7 +2,7 @@
 
 # source job-info.sh
 REPLICATES=10
-EXP_SLUG=2026-11-10-25-percent-poison
+EXP_SLUG=2026-11-10-50-percent-poison
 SEED_OFFSET=10000
 JOB_TIME=16:00:00
 JOB_MEM=8G
