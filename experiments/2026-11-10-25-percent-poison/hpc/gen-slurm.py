@@ -96,8 +96,7 @@ combos.register_var("repro_res__COPY_OVER")
 combos.add_val(
     "symbiont__COPY_OVER",
     [
-        "-START_MOI 0 -HEALTH_TYPE mutualist -VERTICAL_TRANSMISSION 1",
-        "-START_MOI 1 -HEALTH_TYPE mutualist -VERTICAL_TRANSMISSION 1"
+        "-START_MOI 0 -HEALTH_TYPE mutualist -VERTICAL_TRANSMISSION 1"
     ]
 )
 
