@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-DATA_DIR=/mnt/projects/lalejina_project/symbiosis-env-change/kelleyde/data/experiments/2026-11-10-50-percent-poison/
-DUMP_DIR=/mnt/projects/lalejina_project/symbiosis-env-change/kelleyde/data/experiments/2026-11-10-50-percent-poison/dump
+DATA_DIR=/mnt/projects/lalejina_project/symbiosis-env-change/kelleyde/data/2026-11-10-50-percent-poison/
+DUMP_DIR=/mnt/projects/lalejina_project/symbiosis-env-change/kelleyde/data/2026-11-10-50-percent-poison/dump
 FINAL_UPDATE=100000
 TS_UNITS=interval
 TS_RES=1
